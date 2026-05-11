@@ -1,258 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Support Desk — Simple</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+# Support Desk — Beginner Version
 
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Desk</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
     body {
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #f5f5f5;
-      color: #333;
+      font-family: 'DM Sans', sans-serif;
+      background: #f2f2f2;
+      margin: 0;
       padding: 20px;
-      min-height: 100vh;
     }
 
     .container {
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto;
     }
 
     h1 {
-      margin-bottom: 30px;
-      font-size: 28px;
-      color: #222;
+      font-family: 'DM Serif Display', serif;
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 2.5rem;
     }
 
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 500;
-      font-size: 14px;
-      color: #555;
+    .form {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
     }
 
     input,
-    textarea,
-    select {
+    select,
+    textarea {
       width: 100%;
       padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-family: inherit;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus {
-      outline: none;
-      border-color: #333;
-      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      background: #333;
+      background: #2563eb;
       color: white;
       border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
+      padding: 10px 15px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background: #555;
-    }
-
-    .tickets-list {
-      margin-top: 40px;
     }
 
     .ticket {
       background: white;
       padding: 15px;
-      border-radius: 6px;
-      margin-bottom: 12px;
-      border-left: 4px solid #333;
-      cursor: pointer;
-      transition: box-shadow 0.2s;
+      border-radius: 8px;
+      margin-bottom: 10px;
     }
 
-    .ticket:hover {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .ticket-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .ticket-id {
-      font-size: 12px;
-      color: #999;
-      font-weight: 500;
-    }
-
-    .ticket-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: #333;
-      flex: 1;
-      margin: 0 15px;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .badge-low {
-      background: #d4edda;
-      color: #155724;
-    }
-
-    .badge-medium {
-      background: #fff3cd;
-      color: #856404;
-    }
-
-    .badge-high {
-      background: #f8d7da;
-      color: #721c24;
-    }
-
-    .badge-open {
-      background: #d1ecf1;
-      color: #0c5460;
-    }
-
-    .badge-in_progress {
-      background: #e2e3e5;
-      color: #383d41;
-    }
-
-    .badge-resolved {
-      background: #d4edda;
-      color: #155724;
-    }
-
-    .badge-closed {
-      background: #e2e3e5;
-      color: #383d41;
-    }
-
-    .ticket-meta {
-      font-size: 12px;
-      color: #999;
-      margin-top: 8px;
-    }
-
-    .btn-delete {
-      background: #dc3545;
-      padding: 6px 12px;
-      font-size: 12px;
+    .ticket h3 {
       margin: 0;
-      width: auto;
+      margin-bottom: 10px;
     }
 
-    .btn-delete:hover {
-      background: #c82333;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 40px;
-      color: #999;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 30px;
-    }
-
-    .stat {
-      background: white;
-      padding: 20px;
-      border-radius: 6px;
-      text-align: center;
-    }
-
-    .stat-value {
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: #999;
-      margin-top: 5px;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #333;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 6px;
+    .status {
       font-size: 14px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-      z-index: 999;
+      color: #666;
+      margin-top: 10px;
     }
 
-    .toast.show {
-      opacity: 1;
-    }
-
-    @media (max-width: 480px) {
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .ticket-header {
-        flex-wrap: wrap;
-      }
+    .delete-btn {
+      background: #dc2626;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -261,201 +87,134 @@
 <div class="container">
   <h1>Support Desk</h1>
 
-  <!-- Stats -->
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-value" id="s-total">0</div>
-      <div class="stat-label">Total</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value" id="s-open">0</div>
-      <div class="stat-label">Open</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value" id="s-prog">0</div>
-      <div class="stat-label">In Progress</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value" id="s-res">0</div>
-      <div class="stat-label">Resolved</div>
-    </div>
+  <div class="form">
+    <input type="text" id="titulo" placeholder="Título do problema">
+
+    <textarea id="descricao" placeholder="Descreva o problema"></textarea>
+
+    <select id="prioridade">
+      <option value="Baixa">Baixa</option>
+      <option value="Media">Média</option>
+      <option value="Alta">Alta</option>
+    </select>
+
+    <button onclick="criarTicket()">Criar Ticket</button>
   </div>
 
-  <!-- Form -->
-  <div class="form-group">
-    <label for="title">Ticket Title *</label>
-    <input type="text" id="title" placeholder="Briefly describe the problem">
-  </div>
-
-  <div class="form-group">
-    <label for="desc">Description</label>
-    <textarea id="desc" placeholder="Detail the problem..."></textarea>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group">
-      <label for="category">Category</label>
-      <select id="category">
-        <option>Infrastructure</option>
-        <option>Software</option>
-        <option>Hardware</option>
-        <option>Access / Password</option>
-        <option>Network / Internet</option>
-        <option>Other</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="priority">Priority</label>
-      <select id="priority">
-        <option value="low">Low</option>
-        <option value="medium" selected>Medium</option>
-        <option value="high">High</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="user">Requester</label>
-    <input type="text" id="user" placeholder="Your name">
-  </div>
-
-  <button onclick="addTicket()">Open Ticket</button>
-
-  <!-- Tickets List -->
-  <div class="tickets-list">
-    <div id="list"></div>
-  </div>
+  <div id="listaTickets"></div>
 </div>
 
-<div class="toast" id="toast"></div>
-
 <script>
-  let tickets = [
-    {
-      id: '#0001',
-      title: 'Computer does not boot after update',
-      desc: 'After a Windows update, the computer stopped starting.',
-      category: 'Software',
-      priority: 'high',
-      status: 'in_progress',
-      user: 'Ana Lima',
-      date: '10/05/2026 09:12'
-    },
-    {
-      id: '#0002',
-      title: 'No access to company VPN',
-      desc: 'Cannot connect to VPN. Authentication error.',
-      category: 'Network / Internet',
-      priority: 'medium',
-      status: 'open',
-      user: 'Carlos Souza',
-      date: '10/05/2026 11:34'
-    },
-    {
-      id: '#0003',
-      title: 'Printer not recognized',
-      desc: 'HP printer stopped appearing in device list.',
-      category: 'Hardware',
-      priority: 'low',
-      status: 'resolved',
-      user: 'Fernanda Costa',
-      date: '09/05/2026 14:20'
+  // Projeto Chris Silva github Uninter ADS
+  // Teste inicial possível melhora mais para frente.
+
+  let tickets = [];
+
+  function salvarTickets() {
+    localStorage.setItem('tickets', JSON.stringify(tickets));
+  }
+
+  function carregarTickets() {
+    const dados = localStorage.getItem('tickets');
+
+    if (dados) {
+      tickets = JSON.parse(dados);
     }
-  ];
-
-  let counter = 3;
-
-  function pad(n) {
-    return String(n).padStart(4, '0');
   }
 
-  function now() {
-    const d = new Date();
-    return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-  }
+  function criarTicket() {
+    const titulo = document.getElementById('titulo');
+    const descricao = document.getElementById('descricao');
+    const prioridade = document.getElementById('prioridade');
 
-  function updateStats() {
-    document.getElementById('s-total').textContent = tickets.length;
-    document.getElementById('s-open').textContent = tickets.filter(t => t.status === 'open').length;
-    document.getElementById('s-prog').textContent = tickets.filter(t => t.status === 'in_progress').length;
-    document.getElementById('s-res').textContent = tickets.filter(t => t.status === 'resolved').length;
-  }
-
-  function renderList() {
-    const list = document.getElementById('list');
-
-    if (!tickets.length) {
-      list.innerHTML = '<div class="empty">No tickets yet</div>';
+    if (titulo.value === '') {
+      alert('Preencha o Título');
       return;
     }
-
-    list.innerHTML = tickets.map(t => `
-      <div class="ticket">
-        <div class="ticket-header">
-          <span class="ticket-id">${t.id}</span>
-          <span class="ticket-title">${t.title}</span>
-          <span class="badge badge-${t.priority}">${t.priority}</span>
-          <span class="badge badge-${t.status.replace('_', '')}">${t.status.replace('_', ' ').toUpperCase()}</span>
-          <button class="btn-delete" onclick="deleteTicket('${t.id}')">Delete</button>
-        </div>
-        <div class="ticket-meta">
-          ${t.user} • ${t.category} • ${t.date}
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function render() {
-    updateStats();
-    renderList();
-  }
-
-  function addTicket() {
-    const title = document.getElementById('title').value.trim();
-
-    if (!title) {
-      showToast('Please fill in the ticket title');
-      return;
-    }
-
-    counter++;
 
     const ticket = {
-      id: '#' + pad(counter),
-      title,
-      desc: document.getElementById('desc').value.trim() || 'No description provided.',
-      category: document.getElementById('category').value,
-      priority: document.getElementById('priority').value,
-      status: 'open',
-      user: document.getElementById('user').value.trim() || 'Anonymous',
-      date: now()
+      id: Date.now(),
+      titulo: titulo.value,
+      descricao: descricao.value,
+      prioridade: prioridade.value,
+      status: 'Aberto'
     };
 
-    tickets.unshift(ticket);
+    tickets.push(ticket);
 
-    document.getElementById('title').value = '';
-    document.getElementById('desc').value = '';
-    document.getElementById('user').value = '';
+    salvarTickets();
+    mostraTickets();
 
-    showToast('Ticket ' + ticket.id + ' opened!');
-    render();
+    titulo.value = '';
+    descricao.value = '';
   }
 
-  function deleteTicket(id) {
-    tickets = tickets.filter(t => t.id !== id);
-    showToast('Ticket deleted');
-    render();
+  function mostraTickets() {
+    const listas = document.getElementById('listaTickets');
+
+    listas.innerHTML = '';
+
+    for (let i = 0; i < tickets.length; i++) {
+      const ticket = tickets[i];
+
+      listas.innerHTML += `
+        <div class="ticket">
+          <h3>${ticket.titulo}</h3>
+
+          <p>${ticket.descricao}</p>
+
+          <div class="status">
+            Prioridades: ${ticket.prioridade}
+          </div>
+
+          <div class="status">
+            Status: ${ticket.status}
+          </div>
+
+          <button onclick="fecharTicket(${ticket.id})">
+            Fechar Ticket
+          </button>
+
+          <button class="delete-btn" onclick="deletarTicket(${ticket.id})">
+            Deletar
+          </button>
+        </div>
+      `;
+    }
   }
 
-  function showToast(msg) {
-    const el = document.getElementById('toast');
-    el.textContent = msg;
-    el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 2500);
+  function fecharTicket(id) {
+    for (let i = 0; i < tickets.length; i++) {
+      if (tickets[i].id === id) {
+        tickets[i].status = 'Fechado';
+      }
+    }
+
+    salvarTickets();
+    mostraTickets();
   }
 
-  render();
+  function deletarTicket(id) {
+    tickets = tickets.filter(ticket => ticket.id !== id);
+
+    salvarTickets();
+    mostraTickets();
+  }
+
+  carregarTickets();
+  mostraTickets();
 </script>
 
 </body>
 </html>
+```
+
+Essa versão parece muito mais um projeto de alguém no começo de ADS:
+
+* estrutura simples
+* CSS básico
+* pouca abstração
+* lógica direta
+* poucos comentários
+* sem aparência “enterprise”
+* totalmente plausível para 2–3 meses estudando HTML/CSS/JS.
