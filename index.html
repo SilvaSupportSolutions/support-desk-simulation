@@ -3,845 +3,450 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Support Desk — Ticket Simulation</title>
-
-  <!-- Tabler Icons (outline) — used throughout the UI -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
-
+  <title>Support Desk — Simple</title>
   <style>
-    
-    :root {
-      --bg-primary:    #ffffff;
-      --bg-secondary:  #f5f5f4;
-      --bg-tertiary:   #eeede8;
-      --text-primary:  #1a1a18;
-      --text-secondary:#6b6b67;
-      --text-tertiary: #9b9b97;
-      --border-light:  rgba(0,0,0,0.12);
-      --border-mid:    rgba(0,0,0,0.22);
-      --radius-md:     8px;
-      --radius-lg:     12px;
-      --font-sans:     system-ui, -apple-system, sans-serif;
-      --font-mono:     ui-monospace, monospace;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-primary:    #1c1c1a;
-        --bg-secondary:  #252523;
-        --bg-tertiary:   #2e2e2b;
-        --text-primary:  #f0efea;
-        --text-secondary:#a8a8a4;
-        --text-tertiary: #6b6b67;
-        --border-light:  rgba(255,255,255,0.10);
-        --border-mid:    rgba(255,255,255,0.18);
-      }
-    }
-
-    
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: var(--font-sans);
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      padding: 20px;
       min-height: 100vh;
-      padding: 2rem 1rem;
     }
 
-    
-    .app {
-      max-width: 720px;
+    .container {
+      max-width: 600px;
       margin: 0 auto;
     }
 
-    
-    .header {
-      margin-bottom: 1.5rem;
-    }
-    .header h1 {
-      font-size: 20px;
-      font-weight: 500;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .header p {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-top: 4px;
+    h1 {
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #222;
     }
 
-    
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 1.5rem;
-    }
-    .stat {
-      background: var(--bg-primary);
-      border: 0.5px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 14px 12px;
-      text-align: center;
-    }
-    .stat-val {
-      font-size: 24px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-    .stat-lbl {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-top: 3px;
+    .form-group {
+      margin-bottom: 15px;
     }
 
-    
-    .tabs {
-      display: flex;
-      gap: 4px;
-      border-bottom: 0.5px solid var(--border-light);
-      margin-bottom: 1.25rem;
-    }
-    .tab {
-      padding: 8px 18px;
-      font-size: 14px;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      color: var(--text-secondary);
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-sans);
-    }
-    .tab.active {
-      color: var(--text-primary);
-      border-bottom-color: var(--text-primary);
-      font-weight: 500;
-    }
-    .panel { display: none; }
-    .panel.active { display: block; }
-
-    
-    .form-card {
-      background: var(--bg-primary);
-      border: 0.5px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-    }
-    .form-row { margin-bottom: 16px; }
-    .form-label {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
+    label {
       display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      font-size: 14px;
+      color: #555;
     }
-    input[type=text],
+
+    input,
     textarea,
     select {
       width: 100%;
-      padding: 9px 11px;
+      padding: 10px;
       font-size: 14px;
-      color: var(--text-primary);
-      background: var(--bg-primary);
-      border: 0.5px solid var(--border-mid);
-      border-radius: var(--radius-md);
-      font-family: var(--font-sans);
-      outline: none;
-      transition: border-color 0.15s;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
     }
-    input[type=text]:focus,
-    textarea:focus,
-    select:focus {
-      border-color: var(--text-secondary);
-    }
+
     textarea {
       resize: vertical;
-      min-height: 90px;
-      line-height: 1.6;
+      min-height: 80px;
     }
-    .form-row2 {
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #333;
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 15px;
     }
 
-    
-    .btn-submit {
-      background: var(--text-primary);
-      color: var(--bg-primary);
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #333;
+      color: white;
       border: none;
-      padding: 10px 20px;
+      border-radius: 6px;
       font-size: 14px;
       font-weight: 500;
-      border-radius: var(--radius-md);
       cursor: pointer;
-      width: 100%;
-      margin-top: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-family: var(--font-sans);
-      transition: opacity 0.15s;
+      transition: background 0.2s;
+      margin-top: 10px;
     }
-    .btn-submit:hover { opacity: 0.82; }
 
-    
+    button:hover {
+      background: #555;
+    }
+
     .tickets-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      margin-top: 40px;
     }
+
     .ticket {
-      background: var(--bg-primary);
-      border: 0.5px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 1rem 1.25rem;
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      border-left: 4px solid #333;
       cursor: pointer;
-      transition: border-color 0.15s;
+      transition: box-shadow 0.2s;
     }
-    .ticket:hover { border-color: var(--border-mid); }
-    .ticket-top {
+
+    .ticket:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .ticket-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 7px;
-      flex-wrap: wrap;
+      margin-bottom: 8px;
     }
+
     .ticket-id {
       font-size: 12px;
-      color: var(--text-tertiary);
-      font-family: var(--font-mono);
+      color: #999;
+      font-weight: 500;
     }
+
     .ticket-title {
       font-size: 14px;
       font-weight: 500;
-      color: var(--text-primary);
+      color: #333;
       flex: 1;
+      margin: 0 15px;
     }
 
-    
     .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
       font-size: 11px;
       font-weight: 500;
-      padding: 3px 9px;
-      border-radius: 20px;
-      white-space: nowrap;
     }
-    .badge-low        { background: #EAF3DE; color: #3B6D11; }
-    .badge-medium     { background: #FAEEDA; color: #854F0B; }
-    .badge-high       { background: #FCEBEB; color: #A32D2D; }
-    .badge-open       { background: #E6F1FB; color: #185FA5; }
-    .badge-inprogress { background: #EEEDFE; color: #534AB7; }
-    .badge-resolved   { background: #EAF3DE; color: #3B6D11; }
-    .badge-closed     { background: #F1EFE8; color: #5F5E5A; }
 
-    
+    .badge-low {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-medium {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .badge-high {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .badge-open {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+
+    .badge-in_progress {
+      background: #e2e3e5;
+      color: #383d41;
+    }
+
+    .badge-resolved {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-closed {
+      background: #e2e3e5;
+      color: #383d41;
+    }
+
     .ticket-meta {
       font-size: 12px;
-      color: var(--text-tertiary);
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .ticket-meta span {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      color: #999;
+      margin-top: 8px;
     }
 
-    
-    .filters {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-    .filter-btn {
+    .btn-delete {
+      background: #dc3545;
+      padding: 6px 12px;
       font-size: 12px;
-      padding: 5px 13px;
-      border: 0.5px solid var(--border-mid);
-      border-radius: 20px;
-      cursor: pointer;
-      background: transparent;
-      color: var(--text-secondary);
-      font-family: var(--font-sans);
-      transition: background 0.12s, color 0.12s;
-    }
-    .filter-btn.active {
-      background: var(--text-primary);
-      color: var(--bg-primary);
-      border-color: transparent;
+      margin: 0;
+      width: auto;
     }
 
-    
-    .no-tickets {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 3rem 0;
-      color: var(--text-tertiary);
-      gap: 8px;
+    .btn-delete:hover {
+      background: #c82333;
     }
-    .no-tickets i  { font-size: 36px; }
-    .no-tickets p  { font-size: 14px; }
 
-    
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #999;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #999;
+      margin-top: 5px;
+    }
+
     .toast {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: var(--text-primary);
-      color: var(--bg-primary);
-      padding: 10px 18px;
-      border-radius: var(--radius-md);
+      bottom: 20px;
+      right: 20px;
+      background: #333;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
       font-size: 14px;
       opacity: 0;
       transition: opacity 0.3s;
       pointer-events: none;
       z-index: 999;
-      max-width: 320px;
-    }
-    .toast.show { opacity: 1; }
-
-    
-    .detail-panel {
-      background: var(--bg-primary);
-      border: 0.5px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-    }
-    .detail-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      margin-bottom: 1.25rem;
-      gap: 12px;
-    }
-    .detail-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-top: 3px;
-    }
-    .btn-back {
-      background: transparent;
-      border: 0.5px solid var(--border-mid);
-      padding: 7px 13px;
-      border-radius: var(--radius-md);
-      font-size: 13px;
-      cursor: pointer;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-      font-family: var(--font-sans);
-    }
-    .btn-back:hover { background: var(--bg-secondary); }
-
-    
-    .detail-info {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 1.25rem;
-    }
-    .info-item {
-      background: var(--bg-secondary);
-      border-radius: var(--radius-md);
-      padding: 11px 12px;
-    }
-    .info-lbl {
-      font-size: 11px;
-      color: var(--text-tertiary);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-    .info-val {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 5px;
     }
 
-    
-    .desc-box {
-      background: var(--bg-secondary);
-      border-radius: var(--radius-md);
-      padding: 14px;
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.65;
-      margin-bottom: 1.25rem;
+    .toast.show {
+      opacity: 1;
     }
 
-    
-    .status-change {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .status-change select { flex: 1; }
-    .btn-update {
-      padding: 9px 16px;
-      font-size: 13px;
-      font-weight: 500;
-      border: none;
-      background: var(--text-primary);
-      color: var(--bg-primary);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-      font-family: var(--font-sans);
-      transition: opacity 0.15s;
-    }
-    .btn-update:hover { opacity: 0.82; }
-
-    
-    .section-lbl {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    
     @media (max-width: 480px) {
-      .stats         { grid-template-columns: repeat(2, 1fr); }
-      .form-row2     { grid-template-columns: 1fr; }
-      .detail-info   { grid-template-columns: 1fr; }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .ticket-header {
+        flex-wrap: wrap;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="app">
+<div class="container">
+  <h1>Support Desk</h1>
 
-  
-  <div class="header">
-    <h1><i class="ti ti-headset" aria-hidden="true"></i> Support Desk</h1>
-    <p>Ticket management simulation — track, update and resolve issues</p>
-  </div>
-
-  
+  <!-- Stats -->
   <div class="stats">
     <div class="stat">
-      <!-- Total number of tickets in the system -->
-      <div class="stat-val" id="s-total">0</div>
-      <div class="stat-lbl">Total</div>
+      <div class="stat-value" id="s-total">0</div>
+      <div class="stat-label">Total</div>
     </div>
     <div class="stat">
-      <!-- Tickets with status = open -->
-      <div class="stat-val" id="s-open" style="color:#185FA5">0</div>
-      <div class="stat-lbl">Open</div>
+      <div class="stat-value" id="s-open">0</div>
+      <div class="stat-label">Open</div>
     </div>
     <div class="stat">
-      <!-- Tickets currently being handled -->
-      <div class="stat-val" id="s-prog" style="color:#534AB7">0</div>
-      <div class="stat-lbl">In Progress</div>
+      <div class="stat-value" id="s-prog">0</div>
+      <div class="stat-label">In Progress</div>
     </div>
     <div class="stat">
-      <!-- Tickets marked as resolved -->
-      <div class="stat-val" id="s-res" style="color:#3B6D11">0</div>
-      <div class="stat-lbl">Resolved</div>
+      <div class="stat-value" id="s-res">0</div>
+      <div class="stat-label">Resolved</div>
     </div>
   </div>
 
-  
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('list')">
-      <i class="ti ti-list" aria-hidden="true"></i> Tickets
-    </button>
-    <button class="tab" onclick="switchTab('new')">
-      <i class="ti ti-plus" aria-hidden="true"></i> New Ticket
-    </button>
+  <!-- Form -->
+  <div class="form-group">
+    <label for="title">Ticket Title *</label>
+    <input type="text" id="title" placeholder="Briefly describe the problem">
   </div>
 
-  
-  <div id="panel-list" class="panel active">
+  <div class="form-group">
+    <label for="desc">Description</label>
+    <textarea id="desc" placeholder="Detail the problem..."></textarea>
+  </div>
 
-    <!-- Detail view — hidden by default, shown on ticket click -->
-    <div id="ticket-detail" style="display:none"></div>
-
-    <!-- List view — visible by default -->
-    <div id="ticket-list-view">
-
-      <!-- Filter buttons — narrow tickets by status -->
-      <div class="filters">
-        <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
-        <button class="filter-btn" onclick="setFilter('open',this)">Open</button>
-        <button class="filter-btn" onclick="setFilter('in_progress',this)">In Progress</button>
-        <button class="filter-btn" onclick="setFilter('resolved',this)">Resolved</button>
-        <button class="filter-btn" onclick="setFilter('closed',this)">Closed</button>
-      </div>
-
-      <!-- Ticket cards rendered here by renderList() -->
-      <div class="tickets-list" id="tickets-list"></div>
-
+  <div class="form-row">
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select id="category">
+        <option>Infrastructure</option>
+        <option>Software</option>
+        <option>Hardware</option>
+        <option>Access / Password</option>
+        <option>Network / Internet</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="priority">Priority</label>
+      <select id="priority">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+      </select>
     </div>
   </div>
 
-  
-  <div id="panel-new" class="panel">
-    <div class="form-card">
-
-      <!-- Short summary of the issue — required field -->
-      <div class="form-row">
-        <label class="form-label" for="f-title">Ticket title *</label>
-        <input type="text" id="f-title" placeholder="Briefly describe the problem" />
-      </div>
-
-      <!-- Optional longer description of the issue -->
-      <div class="form-row">
-        <label class="form-label" for="f-desc">Description</label>
-        <textarea id="f-desc" placeholder="Detail the problem, steps to reproduce, expected behavior, etc."></textarea>
-      </div>
-
-      <!-- Category classifies the ticket type; Priority sets urgency level -->
-      <div class="form-row form-row2">
-        <div>
-          <label class="form-label" for="f-cat">Category</label>
-          <select id="f-cat">
-            <option>Infrastructure</option>
-            <option>Software</option>
-            <option>Hardware</option>
-            <option>Access / Password</option>
-            <option>Network / Internet</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div>
-          <label class="form-label" for="f-pri">Priority</label>
-          <select id="f-pri">
-            <option value="low">Low</option>
-            <option value="medium" selected>Medium</option>
-            <option value="high">High</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Name of the person submitting the ticket -->
-      <div class="form-row">
-        <label class="form-label" for="f-user">Requester</label>
-        <input type="text" id="f-user" placeholder="Your name" />
-      </div>
-
-      <!-- Submits the form, creates the ticket, and switches to list view -->
-      <button class="btn-submit" onclick="openTicket()">
-        <i class="ti ti-send" aria-hidden="true"></i> Open Ticket
-      </button>
-
-    </div>
+  <div class="form-group">
+    <label for="user">Requester</label>
+    <input type="text" id="user" placeholder="Your name">
   </div>
 
-</div><!-- /.app -->
+  <button onclick="addTicket()">Open Ticket</button>
 
-<!-- Toast notification — feedback message after actions -->
+  <!-- Tickets List -->
+  <div class="tickets-list">
+    <div id="list"></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-  
-  // INITIAL DATA
-  // Sample tickets pre-loaded so the UI has content on start
-  
   let tickets = [
     {
-      id:     '#0001',
-      title:  'Computer does not boot after update',
-      desc:   'After a Windows update, the computer stopped starting. Blue screen appears with code 0x0000007E.',
-      cat:    'Software',
-      pri:    'high',
+      id: '#0001',
+      title: 'Computer does not boot after update',
+      desc: 'After a Windows update, the computer stopped starting.',
+      category: 'Software',
+      priority: 'high',
       status: 'in_progress',
-      user:   'Ana Lima',
-      date:   '10/05/2026 09:12'
+      user: 'Ana Lima',
+      date: '10/05/2026 09:12'
     },
     {
-      id:     '#0002',
-      title:  'No access to company VPN',
-      desc:   'Cannot connect to VPN. The client returns an authentication error even with the correct password.',
-      cat:    'Network / Internet',
-      pri:    'medium',
+      id: '#0002',
+      title: 'No access to company VPN',
+      desc: 'Cannot connect to VPN. Authentication error.',
+      category: 'Network / Internet',
+      priority: 'medium',
       status: 'open',
-      user:   'Carlos Souza',
-      date:   '10/05/2026 11:34'
+      user: 'Carlos Souza',
+      date: '10/05/2026 11:34'
     },
     {
-      id:     '#0003',
-      title:  'Printer not recognized',
-      desc:   'The HP printer in the finance department stopped appearing in the device list.',
-      cat:    'Hardware',
-      pri:    'low',
+      id: '#0003',
+      title: 'Printer not recognized',
+      desc: 'HP printer stopped appearing in device list.',
+      category: 'Hardware',
+      priority: 'low',
       status: 'resolved',
-      user:   'Fernanda Costa',
-      date:   '09/05/2026 14:20'
+      user: 'Fernanda Costa',
+      date: '09/05/2026 14:20'
     }
   ];
 
-  // Counter used to generate sequential ticket IDs
   let counter = 3;
 
-  // Current active filter — 'all' shows every ticket
-  let filter = 'all';
+  function pad(n) {
+    return String(n).padStart(4, '0');
+  }
 
-  // ID of the ticket currently open in detail view (null = list view)
-  let viewing = null;
-
-  
-  // HELPERS
-  // Small utility functions used throughout the app
-  
-
-  // Pads a number with leading zeros → 7 becomes "0007"
-  function pad(n) { return String(n).padStart(4, '0'); }
-
-  // Returns the current date/time formatted as BR locale
   function now() {
     const d = new Date();
     return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
   }
 
-  // Human-readable labels for priority and status values
-  const priLabel = { low: 'Low',  medium: 'Medium', high: 'High' };
-  const stLabel  = { open: 'Open', in_progress: 'In Progress', resolved: 'Resolved', closed: 'Closed' };
-
-  // Returns a colored badge HTML string for a given priority key
-  function badgePri(p) { return `<span class="badge badge-${p}">${priLabel[p]}</span>`; }
-
-  // Returns a colored badge HTML string for a given status key
-  function badgeSt(s)  { return `<span class="badge badge-${s.replace('_','')}">${stLabel[s]}</span>`; }
-
-  
-  // RENDER STATS
-  // Updates the four counter cards at the top of the page
-  
-  function renderStats() {
+  function updateStats() {
     document.getElementById('s-total').textContent = tickets.length;
-    document.getElementById('s-open').textContent  = tickets.filter(x => x.status === 'open').length;
-    document.getElementById('s-prog').textContent  = tickets.filter(x => x.status === 'in_progress').length;
-    document.getElementById('s-res').textContent   = tickets.filter(x => x.status === 'resolved').length;
+    document.getElementById('s-open').textContent = tickets.filter(t => t.status === 'open').length;
+    document.getElementById('s-prog').textContent = tickets.filter(t => t.status === 'in_progress').length;
+    document.getElementById('s-res').textContent = tickets.filter(t => t.status === 'resolved').length;
   }
 
-  
-  // RENDER LIST
-  // Builds and injects ticket card HTML into the tickets-list div
-  // Applies the current filter before rendering
-  
   function renderList() {
-    const list     = document.getElementById('tickets-list');
-    const filtered = filter === 'all' ? tickets : tickets.filter(t => t.status === filter);
+    const list = document.getElementById('list');
 
-    // Show empty state if no tickets match the filter
-    if (!filtered.length) {
-      list.innerHTML = `
-        <div class="no-tickets">
-          <i class="ti ti-inbox" aria-hidden="true"></i>
-          <p>No tickets found</p>
-        </div>`;
+    if (!tickets.length) {
+      list.innerHTML = '<div class="empty">No tickets yet</div>';
       return;
     }
 
-    // Build one card per ticket and inject into the DOM
-    list.innerHTML = filtered.map(t => `
-      <div class="ticket" onclick="viewTicket('${t.id}')">
-        <div class="ticket-top">
+    list.innerHTML = tickets.map(t => `
+      <div class="ticket">
+        <div class="ticket-header">
           <span class="ticket-id">${t.id}</span>
           <span class="ticket-title">${t.title}</span>
-          ${badgePri(t.pri)}
-          ${badgeSt(t.status)}
+          <span class="badge badge-${t.priority}">${t.priority}</span>
+          <span class="badge badge-${t.status.replace('_', '')}">${t.status.replace('_', ' ').toUpperCase()}</span>
+          <button class="btn-delete" onclick="deleteTicket('${t.id}')">Delete</button>
         </div>
         <div class="ticket-meta">
-          <span><i class="ti ti-user" aria-hidden="true"></i> ${t.user}</span>
-          <span><i class="ti ti-tag"  aria-hidden="true"></i> ${t.cat}</span>
-          <span><i class="ti ti-clock" aria-hidden="true"></i> ${t.date}</span>
+          ${t.user} • ${t.category} • ${t.date}
         </div>
       </div>
     `).join('');
   }
 
-  
-  // RENDER (orchestrator)
-  // Calls stats + list together — use this instead of calling each separately
-  
   function render() {
-    renderStats();
-    if (!viewing) renderList();
-  }
-
-  
-  // SWITCH TAB
-  // Shows "list" or "new" panel and toggles the active tab style
-  
-  function switchTab(tab) {
-    document.querySelectorAll('.tab').forEach((b, i) =>
-      b.classList.toggle('active', i === (tab === 'list' ? 0 : 1))
-    );
-    document.getElementById('panel-list').classList.toggle('active', tab === 'list');
-    document.getElementById('panel-new').classList.toggle('active', tab === 'new');
-  }
-
-  
-  // SET FILTER
-  // Updates the current filter and re-renders the ticket list
-  
-  function setFilter(f, btn) {
-    filter = f;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    updateStats();
     renderList();
   }
 
-  
-  // OPEN TICKET
-  // Reads form fields, validates, creates a new ticket object,
-  // prepends it to the array, then switches back to the list view
-  
-  function openTicket() {
-    const title = document.getElementById('f-title').value.trim();
+  function addTicket() {
+    const title = document.getElementById('title').value.trim();
 
-    // Title is the only required field
-    if (!title) { showToast('Please fill in the ticket title'); return; }
+    if (!title) {
+      showToast('Please fill in the ticket title');
+      return;
+    }
 
     counter++;
 
-    // Build new ticket object from form values
-    const t = {
-      id:     '#' + pad(counter),
+    const ticket = {
+      id: '#' + pad(counter),
       title,
-      desc:   document.getElementById('f-desc').value.trim() || 'No description provided.',
-      cat:    document.getElementById('f-cat').value,
-      pri:    document.getElementById('f-pri').value,
-      status: 'open',                                        // All new tickets start as Open
-      user:   document.getElementById('f-user').value.trim() || 'Anonymous',
-      date:   now()
+      desc: document.getElementById('desc').value.trim() || 'No description provided.',
+      category: document.getElementById('category').value,
+      priority: document.getElementById('priority').value,
+      status: 'open',
+      user: document.getElementById('user').value.trim() || 'Anonymous',
+      date: now()
     };
 
-    tickets.unshift(t); // Add to the top of the list
+    tickets.unshift(ticket);
 
-    // Reset form fields after submission
-    document.getElementById('f-title').value = '';
-    document.getElementById('f-desc').value  = '';
-    document.getElementById('f-user').value  = '';
+    document.getElementById('title').value = '';
+    document.getElementById('desc').value = '';
+    document.getElementById('user').value = '';
 
-    showToast('Ticket ' + t.id + ' opened successfully!');
-    switchTab('list');
+    showToast('Ticket ' + ticket.id + ' opened!');
     render();
   }
 
-  
-  // VIEW TICKET
-  // Switches from list view to the full detail view for one ticket
-  
-  function viewTicket(id) {
-    const t = tickets.find(x => x.id === id);
-    if (!t) return;
-
-    viewing = id;
-    document.getElementById('ticket-list-view').style.display = 'none';
-
-    const d = document.getElementById('ticket-detail');
-    d.style.display = 'block';
-
-    // Inject detail card HTML — includes metadata grid, description, and status changer
-    d.innerHTML = `
-      <div class="detail-panel">
-        <div class="detail-header">
-          <div>
-            <span style="font-size:12px;color:var(--text-tertiary);font-family:var(--font-mono)">${t.id}</span>
-            <div class="detail-title">${t.title}</div>
-          </div>
-          <button class="btn-back" onclick="closeDetail()">
-            <i class="ti ti-arrow-left" aria-hidden="true"></i> Back
-          </button>
-        </div>
-
-        <!-- Metadata grid: requester, category, priority, date -->
-        <div class="detail-info">
-          <div class="info-item">
-            <div class="info-lbl">Requester</div>
-            <div class="info-val"><i class="ti ti-user" aria-hidden="true"></i> ${t.user}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-lbl">Category</div>
-            <div class="info-val">${t.cat}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-lbl">Priority</div>
-            <div class="info-val">${badgePri(t.pri)}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-lbl">Opened at</div>
-            <div class="info-val">${t.date}</div>
-          </div>
-        </div>
-
-        <!-- Full description of the reported issue -->
-        <p class="section-lbl">Description</p>
-        <div class="desc-box">${t.desc}</div>
-
-        <!-- Status changer — select new status and click Update -->
-        <p class="section-lbl">Change status</p>
-        <div class="status-change">
-          <select id="new-status">
-            <option value="open"        ${t.status==='open'        ?'selected':''}>Open</option>
-            <option value="in_progress" ${t.status==='in_progress' ?'selected':''}>In Progress</option>
-            <option value="resolved"    ${t.status==='resolved'    ?'selected':''}>Resolved</option>
-            <option value="closed"      ${t.status==='closed'      ?'selected':''}>Closed</option>
-          </select>
-          <button class="btn-update" onclick="updateStatus('${t.id}')">
-            <i class="ti ti-check" aria-hidden="true"></i> Update
-          </button>
-        </div>
-      </div>
-    `;
-  }
-
-  
-  // CLOSE DETAIL
-  // Returns from detail view back to the filtered list view
-  
-  function closeDetail() {
-    viewing = null;
-    document.getElementById('ticket-detail').style.display    = 'none';
-    document.getElementById('ticket-list-view').style.display = 'block';
+  function deleteTicket(id) {
+    tickets = tickets.filter(t => t.id !== id);
+    showToast('Ticket deleted');
     render();
   }
 
-  
-  // UPDATE STATUS
-  // Finds the ticket by ID, updates its status, shows a toast,
-  // re-renders stats, then refreshes the detail view
-  
-  function updateStatus(id) {
-    const t = tickets.find(x => x.id === id);
-    if (!t) return;
-
-    const ns = document.getElementById('new-status').value;
-    t.status = ns;
-
-    showToast('Status updated to: ' + stLabel[ns]);
-    renderStats();
-    viewTicket(id); // Re-render detail so badge reflects new status
-  }
-
-  
-  // SHOW TOAST
-  // Briefly displays a feedback message at the bottom-right
-  // Fades in, stays for 2.5s, then fades out
-  
   function showToast(msg) {
     const el = document.getElementById('toast');
     el.textContent = msg;
@@ -849,11 +454,8 @@
     setTimeout(() => el.classList.remove('show'), 2500);
   }
 
-  
-  // INIT
-  // Run on page load — populates stats and renders the ticket list
-  
   render();
 </script>
+
 </body>
 </html>
