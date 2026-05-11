@@ -1,209 +1,43 @@
-# Support Desk — Beginner Version
-
-```html
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Support Desk</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: #f2f2f2;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    h1 {
-      font-family: 'DM Serif Display', serif;
-      color: #333;
-      margin-bottom: 20px;
-      font-size: 2.5rem;
-    }
-
-    .form {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-
-    button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .ticket {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-
-    .ticket h3 {
-      margin: 0;
-      margin-bottom: 10px;
-    }
-
-    .status {
-      font-size: 14px;
-      color: #666;
-      margin-top: 10px;
-    }
-
-    .delete-btn {
-      background: #dc2626;
-      margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Desk Simulation</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- Project created by Christian Silva, ADS student at Uninter. -->
+
 <div class="container">
-  <h1>Support Desk</h1>
+    <h1>Support Desk Simulation</h1>
+    <p class="subtitle">Simple ticket management system for help desk practice.</p>
 
-  <div class="form">
-    <input type="text" id="titulo" placeholder="Título do problema">
+    <div class="ticket-form">
+        <input type="text" id="ticketTitle" placeholder="Ticket title">
+        <textarea id="ticketDescription" placeholder="Describe the issue"></textarea>
 
-    <textarea id="descricao" placeholder="Descreva o problema"></textarea>
+        <select id="ticketPriority">
+            <option value="Low">Low Priority</option>
+            <option value="Medium">Medium Priority</option>
+            <option value="High">High Priority</option>
+        </select>
 
-    <select id="prioridade">
-      <option value="Baixa">Baixa</option>
-      <option value="Media">Média</option>
-      <option value="Alta">Alta</option>
-    </select>
+        <button onclick="createTicket()">Create Ticket</button>
+        <p id="message"></p>
+    </div>
 
-    <button onclick="criarTicket()">Criar Ticket</button>
-  </div>
+    <div class="filters">
+        <button onclick="filterTickets('All')">All</button>
+        <button onclick="filterTickets('Open')">Open</button>
+        <button onclick="filterTickets('In Progress')">In Progress</button>
+        <button onclick="filterTickets('Closed')">Closed</button>
+    </div>
 
-  <div id="listaTickets"></div>
+    <div id="ticketList" class="ticket-list"></div>
 </div>
 
-<script>
-  // Projeto Chris Silva github Uninter ADS
-  // Teste inicial possível melhora mais para frente.
-
-  let tickets = [];
-
-  function salvarTickets() {
-    localStorage.setItem('tickets', JSON.stringify(tickets));
-  }
-
-  function carregarTickets() {
-    const dados = localStorage.getItem('tickets');
-
-    if (dados) {
-      tickets = JSON.parse(dados);
-    }
-  }
-
-  function criarTicket() {
-    const titulo = document.getElementById('titulo');
-    const descricao = document.getElementById('descricao');
-    const prioridade = document.getElementById('prioridade');
-
-    if (titulo.value === '') {
-      alert('Preencha o Título');
-      return;
-    }
-
-    const ticket = {
-      id: Date.now(),
-      titulo: titulo.value,
-      descricao: descricao.value,
-      prioridade: prioridade.value,
-      status: 'Aberto'
-    };
-
-    tickets.push(ticket);
-
-    salvarTickets();
-    mostraTickets();
-
-    titulo.value = '';
-    descricao.value = '';
-  }
-
-  function mostraTickets() {
-    const listas = document.getElementById('listaTickets');
-
-    listas.innerHTML = '';
-
-    for (let i = 0; i < tickets.length; i++) {
-      const ticket = tickets[i];
-
-      listas.innerHTML += `
-        <div class="ticket">
-          <h3>${ticket.titulo}</h3>
-
-          <p>${ticket.descricao}</p>
-
-          <div class="status">
-            Prioridades: ${ticket.prioridade}
-          </div>
-
-          <div class="status">
-            Status: ${ticket.status}
-          </div>
-
-          <button onclick="fecharTicket(${ticket.id})">
-            Fechar Ticket
-          </button>
-
-          <button class="delete-btn" onclick="deletarTicket(${ticket.id})">
-            Deletar
-          </button>
-        </div>
-      `;
-    }
-  }
-
-  function fecharTicket(id) {
-    for (let i = 0; i < tickets.length; i++) {
-      if (tickets[i].id === id) {
-        tickets[i].status = 'Fechado';
-      }
-    }
-
-    salvarTickets();
-    mostraTickets();
-  }
-
-  function deletarTicket(id) {
-    tickets = tickets.filter(ticket => ticket.id !== id);
-
-    salvarTickets();
-    mostraTickets();
-  }
-
-  carregarTickets();
-  mostraTickets();
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
