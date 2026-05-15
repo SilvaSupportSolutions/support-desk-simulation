@@ -1,6 +1,6 @@
 # Support Desk Simulation
 
-A simple support ticket simulation built with HTML, CSS and JavaScript.
+Service desk workflow simulation focused on ticket handling and technical support operations.
 
 ## About the project
 
